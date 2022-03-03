@@ -1,0 +1,31 @@
+DaemonSet	: It will ensure that one copy of pod defined in our configuration will always be available on every worker node.
+NOTE		: Total Number of pods running in DaemonSet = Number of worker nodes in our cluster.
+=> If a new node is added in our cluster then DaemonSet will automatically allocate pod on that node. 
+=> Similarly, if a node is deleted then the pod running on the node is also destroyed.
+
+USE CASE	: Using DaemonSet instead of a ReplicaSet for Pods that provide a machine-level function, such as MACHINE PERFORMANCE MONITORING or MACHINE LOGGING. 
+
+General Example for DAEMONSET: 
+Below is the configuration file for creating DaemonSet with nginx image. 
+Saved this configuration in DemonSet.yaml file. 
+
+apiVersion: extensions/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: nginx
+  name: my-daemon
+spec:
+  template:
+     metadata:
+       labels:
+        app: nginx
+     spec:   
+       containers:
+         – name: nginx
+           image: nginx
+           
+To create the Deamon Set, execute below commands.
+	# kubectl create -f DemonSet.yaml
+
+

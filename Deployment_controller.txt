@@ -1,0 +1,34 @@
+STEPS TO UPDATE CONTAINER IMAGE USING DEPLOYMENT
+
+1. Go inside "deployement.yaml" file 
+2. Modify by increasing replicas from 1 to 2 and save
+Example : 
+	apiVersion: extensions/v1
+	kind: Deployment
+	metadata:
+	  name: deployment-update
+	spec:
+	  replicas: 2
+  
+3. Then run following command to apply the modified deployment
+	# kubectl apply -f deployment.yaml
+4. Again modify by decreasing replicas from 2 to 1 and save
+5. Then run following command to apply the modified deployment
+	# kubectl apply -f deployment.yaml
+
+
+OR
+##Directly modify deployment strategies into deployment.yaml file
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+
+
+maxUnavailable(0)	==> Maximum number of pods that can be unavailable during the update process.
+maxSurge(1)		==> maximum number of pods that can be created over the desired number of pods.
+So kubernetes will deploy new version by incrementing/decrementing old version to new version internally to achieve 0 downtime.
+
+
